@@ -32,11 +32,13 @@ See the full agent list at <https://skills.sh>.
 |---|---|
 | [`mindformers-pynative-training-run`](skills/mindformers-pynative-training-run/SKILL.md) | Launch / observe MindFormers pynative training. `msrun` command shapes, log + profile dir layout, background-run + Monitor pattern, the stale-`tail -F` gotcha, error-signature lookup. |
 | [`mindformers-pynative-perf-analysis`](skills/mindformers-pynative-perf-analysis/SKILL.md) | Read Ascend MindSpore profile data (`step_trace_time.csv`, `communication.json`, `trace_view.json`, `op_statistic.csv`) and turn it into an actionable next optimization. Bottleneck-classification decision tree included. |
+| [`mindformers-pynative-memory-analysis`](skills/mindformers-pynative-memory-analysis/SKILL.md) | Capture MindSpore `memory_tracker` (`MS_ALLOC_CONF` + `MS_DEV_LAUNCH_BLOCKING`) and read `memory_block.csv`: the three peaks (申请量/理论/内存池, matching davidfffan.github.io/tools), module attribution of the peak (lm_head logits, FSDP weights, AdamW master, loss), and dead-but-held lifetime analysis. Peak-classification decision tree included. |
 | [`gitcode-pr-rfc-pipeline`](skills/gitcode-pr-rfc-pipeline/SKILL.md) | Draft GitCode PR/RFC bodies, drive PR/RFC/link/retest/pipeline workflows, and export failed MindSpore-Bot stages with OpenLiBing log tails as JSON. |
 
-The two pynative skills are designed to stack: the **training-run** skill is the prerequisite for the
-**perf-analysis** skill (you can't analyze a profile you haven't run yet). Install both for
-a full pynative-perf-optimization workflow.
+The three pynative skills stack on the **training-run** skill (you can't analyze a run you haven't
+launched): **perf-analysis** reads `./profile/` for time/throughput, **memory-analysis** reads
+`rank_*/memory_block.csv` for HBM peaks. Install all three for a full pynative perf + memory
+optimization workflow.
 
 ## Scope
 
